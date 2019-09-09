@@ -26,46 +26,93 @@ app.use(
   })
 )
 const router = express.Router()
-router.get('/simple/get', function(req, res) {
-  res.json({
-    msg: 'hello world'
+simpleDemo()
+baseDemo()
+errorDemo()
+extendsDemo()
+
+function simpleDemo() {
+  router.get('/simple/get', function(req, res) {
+    res.json({
+      msg: 'hello world'
+    })
   })
-})
-router.get('/base/get', function(req, res) {
-  res.json(req.query)
-})
-router.post('/base/post', function(req, res) {
-  res.json(req.body)
-})
-router.post('/base/buffer', function(req, res) {
-  let msg = []
-  req.on('data', chunk => {
-    if (chunk) {
-      msg.push(chunk)
+}
+function baseDemo() {
+  router.get('/base/get', function(req, res) {
+    res.json(req.query)
+  })
+  router.post('/base/post', function(req, res) {
+    res.json(req.body)
+  })
+  router.post('/base/buffer', function(req, res) {
+    let msg = []
+    req.on('data', chunk => {
+      if (chunk) {
+        msg.push(chunk)
+      }
+    })
+    req.on('end', () => {
+      let buf = Buffer.concat(msg)
+      res.json(buf.toJSON())
+    })
+  })
+}
+function errorDemo() {
+  router.get('/error/get', function(req, res) {
+    if (Math.random() > 0.5) {
+      res.json({
+        msg: 'hello world'
+      })
+    } else {
+      res.status(500)
+      res.end()
     }
   })
-  req.on('end', () => {
-    let buf = Buffer.concat(msg)
-    res.json(buf.toJSON())
+  router.get('/error/timeout', function(req, res) {
+    setTimeout(() => {
+      res.json({
+        msg: 'hello world'
+      })
+    }, 3000)
   })
-})
-router.get('/error/get', function(req, res) {
-  if (Math.random() > 0.5) {
+}
+function extendsDemo() {
+  router.get('/extends/get', function(req, res) {
     res.json({
       msg: 'hello world'
     })
-  } else {
-    res.status(500)
+  })
+  router.options('/extends/options', function(req, res) {
     res.end()
-  }
-})
-router.get('/error/timeout', function(req, res) {
-  setTimeout(() => {
+  })
+  router.delete('/extends/delete', function(req, res) {
+    res.end()
+  })
+  router.head('/extends/head', function(req, res) {
+    res.end()
+  })
+  router.post('/extends/post', function(req, res) {
+    res.json(req.body)
+  })
+  router.put('/extends/put', function(req, res) {
+    res.end()
+  })
+  router.patch('/extends/patch', function(req, res) {
+    res.end()
+  })
+
+  router.get('/extends/user', function(req, res) {
     res.json({
-      msg: 'hello world'
+      code: 0,
+      message: 'ok',
+      result: {
+        name: 'jack',
+        age: '18'
+      }
     })
-  }, 3000)
-})
+  })
+}
 
 app.use(router)
 
