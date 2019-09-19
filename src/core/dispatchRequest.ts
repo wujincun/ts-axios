@@ -1,7 +1,7 @@
 import { axiosRequestConfig, axiosPromise, axiosResponse } from '../types'
 import { buildUrl } from '../helpers/url'
-import { transformRequest, transformResponse } from '../helpers/data'
-import { processHeaders } from '../helpers/headers'
+import { flattenHeaders } from '../helpers/headers'
+import transform from './transform'
 import xhr from './xhr'
 export default function dispatchRequest(config: axiosRequestConfig): axiosPromise {
   processConfig(config)
@@ -11,21 +11,15 @@ export default function dispatchRequest(config: axiosRequestConfig): axiosPromis
 }
 function processConfig(config: axiosRequestConfig): void {
   config.url = transformUrl(config)
-  config.headers = transformHeaders(config) // 先处理headers后处理data
-  config.data = transformRequestData(config)
+  config.data = transform(config.data, config.headers, config.transformRequest)
+  config.headers = flattenHeaders(config.headers, config.method!)
 }
 function transformUrl(config: axiosRequestConfig): string {
   const { url, params } = config
   return buildUrl(url!, params)
 }
-function transformRequestData(config: axiosRequestConfig): any {
-  return transformRequest(config.data)
-}
-function transformHeaders(config: axiosRequestConfig): any {
-  const { headers = {}, data } = config
-  return processHeaders(headers, data)
-}
+
 function transformResponseData(res: axiosResponse): axiosResponse {
-  res.data = transformResponse(res.data)
+  res.data = transform(res.data, res.headers, res.config.transformResponse)
   return res
 }

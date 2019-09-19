@@ -8,6 +8,7 @@ import {
 } from '../types'
 import dispatchRequest from './dispatchRequest'
 import InterceptorManager from './intercepterManager'
+import mergeConfig from './mergeConfig'
 interface interceptors {
   request: InterceptorManager<axiosRequestConfig>
   response: InterceptorManager<axiosResponse>
@@ -17,8 +18,10 @@ interface PromiseChain<T> {
   rejected?: rejectFn
 }
 export default class Axios {
+  defaults: axiosRequestConfig
   interceptors: interceptors
-  constructor() {
+  constructor(initConfig: axiosRequestConfig) {
+    this.defaults = initConfig
     this.interceptors = {
       request: new InterceptorManager<axiosRequestConfig>(),
       response: new InterceptorManager<axiosResponse>()
@@ -34,6 +37,7 @@ export default class Axios {
     } else {
       config = url
     }
+    config = mergeConfig(this.defaults, config)
     const chain: PromiseChain<any>[] = [
       {
         resolved: dispatchRequest,

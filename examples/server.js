@@ -31,7 +31,7 @@ baseDemo()
 errorDemo()
 extendsDemo()
 interceptorDemo()
-
+configDemo()
 function simpleDemo() {
   router.get('/simple/get', function(req, res) {
     res.json({
@@ -117,6 +117,11 @@ function extendsDemo() {
 function interceptorDemo() {
   router.get('/interceptor/get', function(req, res) {
     res.end('hello')
+  })
+}
+function configDemo() {
+  router.post('/config/post', function(req, res) {
+    res.json(req.body)
   })
 }
 
