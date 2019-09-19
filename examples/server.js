@@ -30,6 +30,7 @@ simpleDemo()
 baseDemo()
 errorDemo()
 extendsDemo()
+interceptorDemo()
 
 function simpleDemo() {
   router.get('/simple/get', function(req, res) {
@@ -111,6 +112,11 @@ function extendsDemo() {
         age: '18'
       }
     })
+  })
+}
+function interceptorDemo() {
+  router.get('/interceptor/get', function(req, res) {
+    res.end('hello')
   })
 }
 
