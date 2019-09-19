@@ -1,10 +1,10 @@
 import { axiosRequestConfig } from '../types'
 import { isPlainObject, deepMerge } from '../helpers/utils'
 function defaultStrat(val1: any, val2: any): any {
-  return typeof val2 !== undefined ? val2 : val1
+  return typeof val2 !== 'undefined' ? val2 : val1
 }
 function fromVal2Strat(val1: any, val2: any): any {
-  return typeof val2 !== undefined && val2
+  return typeof val2 !== 'undefined' && val2
 }
 function deepMergeStrat(val1: any, val2: any): any {
   if (isPlainObject(val2)) {
