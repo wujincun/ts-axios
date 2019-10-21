@@ -1,11 +1,12 @@
-import { isPlainObject, deepMerge } from './utils'
+import { isPlainObject, deepMerge } from './util'
 import { Method } from '../types'
+
 function normalizeHeaderName(headers: any, normalizeName: string): void {
   if (!headers) {
     return
   }
   Object.keys(headers).forEach(name => {
-    if (name !== normalizeName && name.toLocaleUpperCase() === normalizeName.toLocaleUpperCase()) {
+    if (name !== normalizeName && name.toUpperCase() === normalizeName.toUpperCase()) {
       headers[normalizeName] = headers[name]
       delete headers[name]
     }
@@ -14,9 +15,10 @@ function normalizeHeaderName(headers: any, normalizeName: string): void {
 
 export function processHeaders(headers: any, data: any): any {
   normalizeHeaderName(headers, 'Content-Type')
+
   if (isPlainObject(data)) {
     if (headers && !headers['Content-Type']) {
-      headers['Content-Type'] = 'application/json; charset=utf-8'
+      headers['Content-Type'] = 'application/json;charset=utf-8'
     }
   }
   return headers
@@ -27,6 +29,7 @@ export function parseHeaders(headers: string): any {
   if (!headers) {
     return parsed
   }
+
   headers.split('\r\n').forEach(line => {
     let [key, val] = line.split(':')
     key = key.trim().toLowerCase()
@@ -40,14 +43,19 @@ export function parseHeaders(headers: string): any {
   })
   return parsed
 }
+
 export function flattenHeaders(headers: any, method: Method): any {
   if (!headers) {
     return headers
   }
+
   headers = deepMerge(headers.common, headers[method], headers)
-  const methodsToDelete = ['delete', 'get', 'post', 'put', 'head', 'options', 'patch', 'common']
+
+  const methodsToDelete = ['delete', 'get', 'head', 'options', 'post', 'put', 'patch', 'common']
+
   methodsToDelete.forEach(method => {
     delete headers[method]
   })
+
   return headers
 }

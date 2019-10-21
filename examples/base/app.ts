@@ -1,5 +1,5 @@
 import axios from '../../src/index'
-// url demo
+
 // axios({
 //   method: 'get',
 //   url: '/base/get',
@@ -12,7 +12,9 @@ import axios from '../../src/index'
 //   method: 'get',
 //   url: '/base/get',
 //   params: {
-//     foo: { bar: 'baz' }
+//     foo: {
+//       bar: 'baz'
+//     }
 //   }
 // })
 
@@ -33,6 +35,7 @@ import axios from '../../src/index'
 //     foo: '@:$, '
 //   }
 // })
+
 // axios({
 //   method: 'get',
 //   url: '/base/get',
@@ -49,6 +52,7 @@ import axios from '../../src/index'
 //     foo: 'bar'
 //   }
 // })
+
 // axios({
 //   method: 'get',
 //   url: '/base/get?foo=bar',
@@ -57,52 +61,23 @@ import axios from '../../src/index'
 //   }
 // })
 
-//data demo
 // axios({
-//   method: 'post',
-//   url: '/base/post',
-//   data: {
-//     a: 1,
-//     b: 2
-//   }
-// })
-// const arr = new Int32Array([21, 31])
-// axios({
-//   method: 'post',
-//   url: '/base/buffer',
-//   data: arr
-// })
+//     method: 'post',
+//     url: '/base/post',
+//     data: {
+//       a: 1,
+//       b: 2
+//     }
+//   })
 
-//headers content-type demo
-// axios({
-//   method: 'post',
-//   url: '/base/post',
-//   data: {
-//     a: 1,
-//     b: 2
-//   }
-// })
-// axios({
-//   method: 'post',
-//   url: '/base/post',
-//   headers: {
-//     'content-type': 'application/json',
-//     Accept: 'application/json,text-plain,*/*'
-//   },
-//   data: {
-//     a: 1,
-//     b: 2
-//   }
-// })
-// const paramsString = 'q=URLUtils.searchParams&topic=api'
-// const searchParams = new URLSearchParams(paramsString)
-// axios({
-//   method: 'post',
-//   url: '/base/post',
-//   data: searchParams
-// })
+//   const arr = new Int32Array([21, 31])
 
-// response promise demo
+//   axios({
+//     method: 'post',
+//     url: '/base/buffer',
+//     data: arr
+//   })
+
 axios({
   method: 'post',
   url: '/base/post',
@@ -110,7 +85,7 @@ axios({
     a: 1,
     b: 2
   }
-}).then(res => {
+}).then((res) => {
   console.log(res)
 })
 
@@ -119,9 +94,9 @@ axios({
   url: '/base/post',
   responseType: 'json',
   data: {
-    a: 1,
-    b: 2
+    a: 3,
+    b: 4
   }
-}).then(res => {
+}).then((res) => {
   console.log(res)
 })

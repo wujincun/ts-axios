@@ -1,25 +1,29 @@
-import { isDate, isPlainObject } from './utils'
+import { isDate, isPlainObject } from './util'
+
 function encode(val: string): string {
   return encodeURIComponent(val)
     .replace(/%40/g, '@')
     .replace(/%3A/gi, ':')
     .replace(/%24/g, '$')
-    .replace(/%2c/gi, ',')
+    .replace(/%2C/gi, ',')
     .replace(/%20/g, '+')
     .replace(/%5B/gi, '[')
     .replace(/%5D/gi, ']')
 }
-export function buildUrl(url: string, params?: any): string {
+
+export function buildURL(url: string, params?: any) {
   if (!params) {
     return url
   }
+
   const parts: string[] = []
+
   Object.keys(params).forEach(key => {
-    const val = params[key]
+    let val = params[key]
     if (val === null || typeof val === 'undefined') {
       return
     }
-    let values = []
+    let values: string[]
     if (Array.isArray(val)) {
       values = val
       key += '[]'
@@ -35,13 +39,17 @@ export function buildUrl(url: string, params?: any): string {
       parts.push(`${encode(key)}=${encode(val)}`)
     })
   })
-  let serializeParams = parts.join('&')
-  if (serializeParams) {
-    const hashIndex = url.indexOf('#')
-    if (hashIndex !== -1) {
-      url = url.slice(0, hashIndex)
+
+  let serializedParams = parts.join('&')
+
+  if (serializedParams) {
+    const markIndex = url.indexOf('#')
+    if (markIndex !== -1) {
+      url = url.slice(0, markIndex)
     }
-    url += (url.includes('?') ? '&' : '?') + serializeParams
+
+    url += (url.indexOf('?') === -1 ? '?' : '&') + serializedParams
   }
+
   return url
 }
