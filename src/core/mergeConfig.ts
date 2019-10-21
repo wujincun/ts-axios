@@ -1,4 +1,4 @@
-import { axiosRequestConfig } from '../types'
+import { AxiosRequestConfig } from '../types'
 import { isPlainObject, deepMerge } from '../helpers/utils'
 function defaultStrat(val1: any, val2: any): any {
   return typeof val2 !== 'undefined' ? val2 : val1
@@ -29,9 +29,9 @@ stratsKeysDeepMerge.forEach(key => {
 })
 
 export default function mergeConfig(
-  config1: axiosRequestConfig,
-  config2?: axiosRequestConfig
-): axiosRequestConfig {
+  config1: AxiosRequestConfig,
+  config2?: AxiosRequestConfig
+): AxiosRequestConfig {
   const config = Object.create(null)
   if (!config2) {
     config2 = {}

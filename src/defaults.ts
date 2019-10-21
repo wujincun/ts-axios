@@ -1,7 +1,7 @@
-import { axiosRequestConfig } from './types'
+import { AxiosRequestConfig } from './types'
 import { transformRequest, transformResponse } from './helpers/data'
 import { processHeaders } from './helpers/headers'
-const defaults: axiosRequestConfig = {
+const defaults: AxiosRequestConfig = {
   method: 'get',
   timeout: 0,
   headers: {

@@ -1,34 +1,34 @@
 import {
-  axiosRequestConfig,
-  axiosPromise,
+  AxiosRequestConfig,
+  AxiosPromise,
   Method,
-  axiosResponse,
-  resolvedFn,
-  rejectFn
+  AxiosResponse,
+  ResolvedFn,
+  RejectedFn
 } from '../types'
 import dispatchRequest from './dispatchRequest'
 import InterceptorManager from './intercepterManager'
 import mergeConfig from './mergeConfig'
 interface interceptors {
-  request: InterceptorManager<axiosRequestConfig>
-  response: InterceptorManager<axiosResponse>
+  request: InterceptorManager<AxiosRequestConfig>
+  response: InterceptorManager<AxiosResponse>
 }
 interface PromiseChain<T> {
-  resolved: resolvedFn<T> | ((config: axiosRequestConfig) => axiosPromise)
-  rejected?: rejectFn
+  resolved: ResolvedFn<T> | ((config: AxiosRequestConfig) => AxiosPromise)
+  rejected?: RejectedFn
 }
 export default class Axios {
-  defaults: axiosRequestConfig
+  defaults: AxiosRequestConfig
   interceptors: interceptors
-  constructor(initConfig: axiosRequestConfig) {
+  constructor(initConfig: AxiosRequestConfig) {
     this.defaults = initConfig
     this.interceptors = {
-      request: new InterceptorManager<axiosRequestConfig>(),
-      response: new InterceptorManager<axiosResponse>()
+      request: new InterceptorManager<AxiosRequestConfig>(),
+      response: new InterceptorManager<AxiosResponse>()
     }
   }
 
-  request(url: any, config?: any): axiosPromise {
+  request(url: any, config?: any): AxiosPromise {
     if (typeof url === 'string') {
       if (!config) {
         config = {}
@@ -60,28 +60,28 @@ export default class Axios {
 
     return promise
   }
-  get(url: string, config?: axiosRequestConfig) {
+  get(url: string, config?: AxiosRequestConfig) {
     return this._requestWithoutData('get', url, config)
   }
-  delete(url: string, config?: axiosRequestConfig) {
+  delete(url: string, config?: AxiosRequestConfig) {
     return this._requestWithoutData('delete', url, config)
   }
-  head(url: string, config?: axiosRequestConfig) {
+  head(url: string, config?: AxiosRequestConfig) {
     return this._requestWithoutData('head', url, config)
   }
-  options(url: string, config?: axiosRequestConfig) {
+  options(url: string, config?: AxiosRequestConfig) {
     return this._requestWithoutData('options', url, config)
   }
-  post(url: string, data?: any, config?: axiosRequestConfig) {
+  post(url: string, data?: any, config?: AxiosRequestConfig) {
     return this._requestWithData('post', url, data, config)
   }
-  put(url: string, data?: any, config?: axiosRequestConfig) {
+  put(url: string, data?: any, config?: AxiosRequestConfig) {
     return this._requestWithData('put', url, data, config)
   }
-  patch(url: string, data?: any, config?: axiosRequestConfig) {
+  patch(url: string, data?: any, config?: AxiosRequestConfig) {
     return this._requestWithData('patch', url, data, config)
   }
-  _requestWithoutData(method: Method, url: string, config?: axiosRequestConfig) {
+  _requestWithoutData(method: Method, url: string, config?: AxiosRequestConfig) {
     return this.request(
       Object.assign(config || {}, {
         method,
@@ -89,7 +89,7 @@ export default class Axios {
       })
     )
   }
-  _requestWithData(method: Method, url: string, data?: any, config?: axiosRequestConfig) {
+  _requestWithData(method: Method, url: string, data?: any, config?: AxiosRequestConfig) {
     return this.request(
       Object.assign(config || {}, {
         method,

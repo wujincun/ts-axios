@@ -1,7 +1,7 @@
-import { axiosRequestConfig, axiosPromise, axiosResponse } from '../types'
+import { AxiosRequestConfig, AxiosPromise, AxiosResponse } from '../types'
 import { parseHeaders } from '../helpers/headers'
 import { creatError } from '../helpers/error'
-export default function xhr(config: axiosRequestConfig): axiosPromise {
+export default function xhr(config: AxiosRequestConfig): AxiosPromise {
   return new Promise((resolve, reject) => {
     const { url, method = 'get', data = null, headers, responseType, timeout } = config
     const request = new XMLHttpRequest()
@@ -25,7 +25,7 @@ export default function xhr(config: axiosRequestConfig): axiosPromise {
 
       const responseHeaders = parseHeaders(request.getAllResponseHeaders())
       const responseData = responseType !== 'text' ? request.response : request.responseText
-      const response: axiosResponse = {
+      const response: AxiosResponse = {
         data: responseData,
         status: request.status,
         statusText: request.statusText,
@@ -50,7 +50,7 @@ export default function xhr(config: axiosRequestConfig): axiosPromise {
     })
     request.send(data)
 
-    function handleResponse(response: axiosResponse): void {
+    function handleResponse(response: AxiosResponse): void {
       if (response.status >= 200 && response.status < 300) {
         resolve(response)
       } else {
