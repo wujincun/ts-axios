@@ -1,4 +1,4 @@
-import { isDate, isPlainObject, isUrlSearchParams } from './util'
+import { isDate, isPlainObject, isURLSearchParams } from './util'
 
 interface URLOrigin {
   protocol: string
@@ -26,7 +26,7 @@ export function buildURL(
   let serializedParams
   if (paramsSerializer) {
     serializedParams = paramsSerializer(params)
-  } else if (isUrlSearchParams(params)) {
+  } else if (isURLSearchParams(params)) {
     serializedParams = params.toString()
   } else {
     const parts: string[] = []
