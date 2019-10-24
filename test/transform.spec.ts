@@ -1,4 +1,4 @@
-import axios, { AxiosResponse, AxiosError, AxiosTransformer } from '../src/index'
+import axios, { AxiosResponse, AxiosTransformer } from '../src/index'
 import { getAjaxRequest } from './helper'
 describe('transfom', () => {
   beforeEach(() => {
@@ -30,7 +30,8 @@ describe('transfom', () => {
       })
       setTimeout(() => {
         expect(typeof response.data).toBe('object')
-        expect(response.data.foo).toBe('bars')
+        expect(response.data.foo).toBe('bar')
+        done()
       }, 100)
     })
   })
@@ -59,7 +60,7 @@ describe('transfom', () => {
       })
     })
     return getAjaxRequest().then(request => {
-      expect(request.params).toBe('{ "foo": "baz" }')
+      expect(request.params).toBe('{"foo":"baz"}')
     })
   })
   test('should allowing mutating headers', () => {
