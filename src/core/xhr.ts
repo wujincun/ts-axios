@@ -11,7 +11,7 @@ export default function xhr(config: AxiosRequestConfig): AxiosPromise {
       data = null,
       url,
       method = 'get',
-      headers,
+      headers = {},
       responseType,
       timeout,
       cancelToken,
@@ -84,7 +84,7 @@ export default function xhr(config: AxiosRequestConfig): AxiosPromise {
     }
     function processHeaders(): void {
       if (isFormData(data)) {
-        delete headers['Content-type']
+        delete headers['Content-Type']
       }
 
       if ((withCredentials || isUrlSameOrigin) && xsrfCookieName) {

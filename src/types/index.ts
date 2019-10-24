@@ -97,6 +97,7 @@ export interface Axios {
     request: AxiosInterceptorManager<AxiosRequestConfig>
     response: AxiosInterceptorManager<AxiosResponse>
   }
+  getUri: (config?: AxiosRequestConfig) => string
 
   request<T = any>(config: AxiosRequestConfig): AxiosPromise<T>
 
